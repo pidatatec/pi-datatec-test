@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Manrope:wght@600;700;800&display=swap");
+
 :root{--bg:#f6f8fc;--sf:#fff;--ink:#0f1b2d;--mut:#55627a;--br:#2457d6;--br2:#13a89e;--ln:#e0e6f0;--soft:#eaf0fd;--hero:linear-gradient(135deg,#0d2250,#1b4fc4 60%,#13a89e);
 --hf:'Manrope','Segoe UI',system-ui,sans-serif;--bf:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
