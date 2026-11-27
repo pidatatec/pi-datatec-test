@@ -183,17 +183,19 @@ async function showPost(slug){const el=document.getElementById("ar");const root=
   el.innerHTML=`<div class="meta">${fmt(p.date)}${p.author?" · "+esc(p.author):""}</div>${md(t)}<p style="margin-top:28px"><a class="btn o" href="index.html#blogs">← All posts</a></p>`}
  catch(e){el.innerHTML=`<p>This post could not be found. <a href="index.html#blogs">Back to Blogs</a></p>`}}
 function route(){
-  const file=(location.pathname.split("/").pop()||"index.html").toLowerCase();
-  let k=(location.hash||"#"+(file==="services.html"?"solutions":file==="industries.html"?"industries":file==="contact.html"?"contact":"home")).slice(1);
-  const isPost=file==="index.html"&&k.startsWith("post-");
-  if(!isPost&&!P[k])k=file==="services.html"?"solutions":file==="industries.html"?"industries":file==="contact.html"?"contact":"home";
+  const file=(location.pathname.replace(/\/+$/,"").split("/").pop()||"index.html").toLowerCase();
+  const page=file.replace(/\.html$/,"");
+  const fallback=page==="services"?"solutions":page==="industries"?"industries":page==="contact"?"contact":"home";
+  let k=(location.hash||"#"+fallback).slice(1);
+  const isPost=page==="index"&&k.startsWith("post-");
+  if(!isPost&&!P[k])k=fallback;
   const app=document.getElementById("app");
   if(isPost){app.innerHTML=hdr("Blogs","Loading…","")+`<section class="sec"><div class="wrap art" id="ar"></div></section>`;showPost(k.slice(5))}else app.innerHTML=P[k]();
   document.title=(isPost?"Blogs":k==="home"?"":T[k])+(k==="home"?"":" – ")+"PI DATATEC LLP";
-  const activeHref=isPost?"":file==="index.html"?(k==="home"?"index.html":k==="blogs"?"index.html#blogs":""):
-    file==="services.html"&&k==="solutions"?"services.html#solutions":
-    file==="industries.html"&&k==="industries"?"industries.html#industries":
-    file==="contact.html"&&k==="contact"?"contact.html":"";
+  const activeHref=isPost?"":page==="index"?(k==="home"?"index.html":k==="blogs"?"index.html#blogs":""):
+    page==="services"&&k==="solutions"?"services.html#solutions":
+    page==="industries"&&k==="industries"?"industries.html#industries":
+    page==="contact"&&k==="contact"?"contact.html":"";
   nav.querySelectorAll("a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")===activeHref&&activeHref!==""));
   nav.classList.remove("open");mb.setAttribute("aria-expanded","false");
   window.scrollTo(0,0);if(k==="blogs")listPosts();
